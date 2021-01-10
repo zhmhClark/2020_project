@@ -8,9 +8,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 ##################################################################################################################################################
 #调用另一个文件夹里的TiobeData 要讲两个文件放到同一个工程里
-#from Data import TiobeData
-#TbData= TiobeData()
-#data1=TbData.GetData()
+from dataCrawler import TiobeData
+TbData= TiobeData()
+data1=TbData.GetData()
 #################################################################################################################################################
 # 将含有小数的数字字符串转换为数字
 def numberstr2num(num_str):
@@ -158,7 +158,7 @@ for data_item in data2.items():
     color = [color_dict[i] for i in x]
     y = [item[1] for item in temp]
     #调节图形大小，宽，高
-    plt.figure(figsize=(30,30))
+    
     patches,l_text,p_text=plt.pie(x=y,labels= list(x),labeldistance=1.3,autopct='%2.1f%%',shadow=False,pctdistance=0.5)
     #大标题
     plt.title(data_item[0], fontproperties='simhei', fontsize=40)
