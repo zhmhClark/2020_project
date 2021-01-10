@@ -7,7 +7,7 @@ import warnings
 import numpy as np
 import matplotlib.pyplot as plt
 ##################################################################################################################################################
-#调用另一个文件夹里的TiobeData 要讲两个文件放到同一个工程里
+#调用另一个文件夹里的TiobeData 要将两个文件放到同一个工程里
 from dataCrawler import TiobeData
 TbData= TiobeData()
 data1=TbData.GetData()
@@ -37,7 +37,15 @@ def numberstr2num(num_str):
             total_num += pointstr2num(point_num_seg)
 
         return total_num if not capital_char == '-' else 0 - total_num
+
+
 def str2num(num_str):
+    '''
+    整数字符串转成数字
+    :param num_str:
+    :return:
+    '''
+
     # 主方法已经验证过数字有效性，这里就不必再验证了
     index = 0
     str_len = len(num_str)
@@ -49,6 +57,11 @@ def str2num(num_str):
 
 
 def pointstr2num(point_str):
+    '''
+    小数部分字符串转成数字
+    :param point_str:
+    :return:
+    '''
     # 主方法已经验证过数字有效性，这里就不必再验证了
     index = 0
     point_num = 0
@@ -98,10 +111,28 @@ for k4 in data2.keys():
        for k5 in data2[temp_k].keys():
            if k5 not in data2[k4].keys():
                data2[k4].update({k5: 0})
+
+
+
+
+'''
+for k3 in data2.keys():
+   if 'R' not in data2[k3].keys():
+       data2[k3].update({'R': 0})
+   if 'SQL' not in data2[k3].keys():
+       data2[k3].update({'Groovy': 0})
+   if 'Visual Basic' not in data2[k3].keys():
+       data2[k3].update({'Visual Basic': 0})
+for k4 in data2.keys():
+       print(data2[k4].keys())
+ '''
+#print(data2)
+
 colors = ['k', 'r', 'sienna', 'yellow', 'g', 'aquamarine', 'dodgerblue', 'pink', 'b', 'darkviolet']
 #names = ['C', 'Java', 'Python', 'C++', 'C#', 'Visual Basic', 'JavaScript', 'PHP', 'R', 'Groovy']##所有的names
 color_dict = {'Java':'k','C++':'r', 'Groovy':'sienna', 'Visual Basic':'yellow', 'Python':"g",'JavaScript':'aquamarine', 'R':'dodgerblue','C':'pink','C#':'b','PHP':"darkviolet"}
 from collections import OrderedDict
+
 ##################################################################################################################
 #按日期进行排序
 def sort_key(old_dict, reverse=False):
@@ -126,16 +157,17 @@ for data_item in data2.items():
     x = [item[0] for item in temp]
     color = [color_dict[i] for i in x]
     y = [item[1] for item in temp]
-    plt.barh(range(1, 11), y, color=color)
-    plt.title(data_item[0], fontproperties='simhei', fontsize=24)
-
-    plt.yticks(range(1, 11),
-               list(x),
-               fontproperties='simhei', fontsize=16
-               )
-    plt.xticks(range(0, 30, 100))
-    for x, y in zip(range(1, 11), y):
-        plt.text(y + 0.1, x - 0.1, str(y))
+    #调节图形大小，宽，高
+    
+    patches,l_text,p_text=plt.pie(x=y,labels= list(x),labeldistance=1.3,autopct='%2.1f%%',shadow=False,pctdistance=0.5)
+    #大标题
+    plt.title(data_item[0], fontproperties='simhei', fontsize=40)
+    #字大小
+    for t in p_text:
+        t.set_size(17)
+    for t in l_text:
+        t.set_size(20)
+    
     plt.pause(0.006)
 plt.show()
 
